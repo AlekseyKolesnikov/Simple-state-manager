@@ -8,8 +8,14 @@ export class StateManager {
         this.reducersList[event] = reducers;
     }
 
+    static unregister(event, callableAction) {
+        const reducers = this.reducersList[event];
+        if (!reducers) return;
+        this.reducersList[event] = reducers.filter(item => item != callableAction);
+    }
+
     static proceed(event, payload) {
-        let reducers = this.reducersList[event];
+        const reducers = this.reducersList[event];
         if (!reducers) return;
         reducers.forEach(action => action(payload));
     }

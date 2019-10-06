@@ -18,7 +18,15 @@ Component.jsx
     constructor(props) {
         super(props);
 
-        StateManager.register(AN_ACTION, this.updateData.bind(this));
+        this.updateData = this.updateData.bind(this);
+    }
+
+    componentDidMount() {
+        StateManager.register(AN_ACTION, this.updateData);
+    }
+
+    componentWillUnmount() {
+        StateManager.unregister(AN_ACTION, this.updateData);
     }
 
     updateData(data) {
